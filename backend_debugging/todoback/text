@@ -1,0 +1,13 @@
+1- not find nodemon = npm i nodemon
+2-  require("../db"); = require("./db");
+3- Not find mongoose = npm i mongoose
+4- const todoModel = require("./../../db/models/todos"); 
+5- In file models.todo.js = mongoose
+6- module.exports for Schema
+7- In file routes = const todoRouter = express.Router();
+8- app.listen in file index from .env PORT=4000
+9- In file controllers = module.exports
+10- app.use(cors);= app.use(cors());
+11- express for updateTodo
+12- In file controllers = create one step 
+13- In File index = const morgan = require("morgan");
