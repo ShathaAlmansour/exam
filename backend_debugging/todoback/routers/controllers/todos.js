@@ -1,21 +1,5 @@
-const todoModel = require("../../db/models/todo");
-
-const createTodo = (req, res) => {
-  const { todo } = req.body;
-
-  const newTodo = new todoModel({
-    todo,
-  });
-  newTodo
-    .save()
-    .then((result) => {
-      res.status(200).json(result);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
-};
-
+const todoModel = require("./../../db/models/todo");
+//done
 const getAllTodo = (req, res) => {
   todoModel
     .find({ isDel: false })
@@ -27,9 +11,9 @@ const getAllTodo = (req, res) => {
       res.status(400).json(err);
     });
 };
-
+//done
 const getTodoById = (req, res) => {
-  const { id } = req.params;
+  const { id } = req.query;
   todoModel
     .findOne({ _id: id, isDel: false })
     .then((result) => {
@@ -51,11 +35,28 @@ const getCompletedTodos = (req, res) => {
     });
 };
 
+const createTodo = (req, res) => {
+  const { task } = req.body;
+
+  const newTodo = new todoModel({
+    task,
+  });
+
+  newTodo
+    .save()
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+};
+
 const completeTodo = (req, res) => {
   const { id } = req.params;
 
   todoModel
-    .findOneAndUpdate({ _id: id }, { isCompleted: true }, { new: true })
+    .findOneAndUpdate({ id }, { isCompleted: true }, { new: true })
     .exec()
     .then((result) => {
       res.status(200).json(result);
@@ -80,10 +81,10 @@ const updateTodo = (req, res) => {
 };
 
 const deleteTodo = (req, res) => {
-  const { _id } = req.params;
+  const { id } = req.params;
 
   todoModel
-    .findByIdAndDelete(_id, { $set: { isDel: true } })
+    .findOneAndUpdate({ _id: id }, { isDel: true })
     .then((result) => {
       res.status(200).json(result);
     })

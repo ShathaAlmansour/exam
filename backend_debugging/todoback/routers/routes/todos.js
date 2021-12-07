@@ -1,6 +1,5 @@
 const express = require("express");
-// const todoRouter = express.Router();
-const todoRouter = express.Router();
+const { model } = require("mongoose");
 
 const {
   getAllTodo,
@@ -10,13 +9,16 @@ const {
   completeTodo,
   deleteTodo,
   updateTodo,
-} = require("../controllers/todos");
+} = require("./../controllers/todos");
+
+const todoRouter = express.Router();
 
 todoRouter.get("/todos", getAllTodo);
 todoRouter.get("/todo", getTodoById);
 todoRouter.get("/todos/completed", getCompletedTodos);
 todoRouter.post("/todos", createTodo);
 todoRouter.put("/todos/:id", completeTodo);
-todoRouter.put("/todo", updateTodo);
-todoRouter.delete("/delete/:_id", deleteTodo);
+todoRouter.put("/todo/:id", updateTodo);
+todoRouter.delete("/delete/:id", deleteTodo);
+
 module.exports = todoRouter;
